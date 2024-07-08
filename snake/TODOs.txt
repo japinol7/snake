@@ -1,0 +1,12 @@
+## TODOs & Wishlist ##
+
+Future Improvements.
+
+> High Priority:
+    > Add feature to pause the current game.
+    > Add an "end game reason" to the state of the game and log it to the out file.
+
+> General:
+    > Change Snake head to a triangle.
+    > Add a menu.
+    > Add a score board.

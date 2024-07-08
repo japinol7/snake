@@ -1,0 +1,18 @@
+...........................................
+<no_datetime> Start app Snake v. 0.01 dev. in C++ by Joan A. Pinol
+Screen size in pixels: 1280 * 948
+Screen size minus the score bar: 1280 * 900
+Screen cells horizontal qty: 100
+Screen cells vertical qty: 80
+Snake initial body size: 5
+Snake body size to increase: 1
+Snake initial speed: 0.6
+
+<no_datetime> End app Snake
+Score: 75
+Apples fetched: 5
+Snake body size: 10
+Snake speed: 0.7
+End game reason: --
+...........................................
+.
