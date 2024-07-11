@@ -20,9 +20,10 @@ include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 # Add SDL project
 add_executable(${JP_PRJ_RUN_NAME}
         ${JP_PRJ_SRC}/main.cpp
-        ${JP_PRJ_SRC}/arguments_parser/arguments_parser.cpp
         ${JP_PRJ_SRC}/game.cpp
+        ${JP_PRJ_SRC}/arguments_parser/arguments_parser.cpp
         ${JP_PRJ_SRC}/controller/controller.cpp
+        ${JP_PRJ_SRC}/services/resource_manager/resource_manager.cpp
         ${JP_PRJ_SRC}/tools/utils/utils.cpp
         ${JP_PRJ_SRC}/tools/logger/logger.cpp
         ${JP_PRJ_SRC}/output_file_logger/output_file_logger.cpp

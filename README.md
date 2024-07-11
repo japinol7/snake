@@ -70,13 +70,13 @@
 **Examples of usage**
 
 	Run examples using bash on Linux:
-		$ ./snake --body-pieces 5 --cells-width-qty 90
-		$ ./snake --body-pieces 5 --cells-width-qty 90 --fullscreen
-		$ ./snake --body-pieces 30 --cells-width-qty 200 --snake-speed 0.95 --fullscreen
-		$ ./snake --body-pieces 5 --cells-width-qty 50 --snake-speed 0.4
+     $ ./snake --body-pieces 5 --cells-width-qty 90
+     $ ./snake --body-pieces 5 --cells-width-qty 90 --fullscreen
+     $ ./snake --body-pieces 30 --cells-width-qty 200 --snake-speed 0.95 --fullscreen
+     $ ./snake --body-pieces 5 --cells-width-qty 50 --snake-speed 0.4
 
 	Run examples using bash on Windows:
-		$ ./snake.exe --body-pieces 5 --cells-width-qty 90
-		$ ./snake.exe --body-pieces 5 --cells-width-qty 90 --fullscreen
-		$ ./snake.exe --body-pieces 30 --cells-width-qty 200 --snake-speed 0.95 --fullscreen
-		$ ./snake.exe --body-pieces 5 --cells-width-qty 50 --snake-speed 0.4
+     $ ./snake.exe --body-pieces 5 --cells-width-qty 90
+     $ ./snake.exe --body-pieces 5 --cells-width-qty 90 --fullscreen
+     $ ./snake.exe --body-pieces 30 --cells-width-qty 200 --snake-speed 0.95 --fullscreen
+     $ ./snake.exe --body-pieces 5 --cells-width-qty 50 --snake-speed 0.4

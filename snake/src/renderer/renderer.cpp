@@ -4,20 +4,21 @@
 
 #include <SDL_image.h>
 
-#include "src/tools/utils/utils.hpp"
 #include "src/arguments_parser/arguments_parser.hpp"
 #include "renderer.hpp"
 
 using std::get;
 
 Renderer::Renderer(const int screen_width, const int screen_height,
-                   const unsigned int grid_width, const unsigned int grid_height)
+                   const unsigned int grid_width, const unsigned int grid_height,
+                   const ResourceManager& resource_manager)
         : screen_width(screen_width), screen_height(screen_height),
-          grid_width(grid_width), grid_height(grid_height) {
+          grid_width(grid_width), grid_height(grid_height),
+          res_manager(const_cast<ResourceManager &>(resource_manager)) {
     InitSDL();
     CreateWindow();
     CreateRenderer();
-    LoadTextures();
+    res_manager.LoadTextures(renderer, screen_width, screen_height);
 }
 
 void Renderer::InitSDL() {
@@ -57,23 +58,20 @@ Renderer::~Renderer() {
     SDL_Quit();
 }
 
-void Renderer::LoadTextures() {
-    background_texture = LoadTexture(renderer, kFileNameImgBackground, screen_width, screen_height);
-    score_zone_texture = LoadTexture(renderer, kFileNameImgScoreZone, score_zone_rect.w, score_zone_rect.h);
-    jp_logo_texture = LoadTexture(renderer, kFileNameImgLogoJp, jp_logo_rect.w, jp_logo_rect.h);
-}
-
 void Renderer::CleanScreen() const {
+    SDL_Rect jp_logo_rect = res_manager.GetJpLogoRect();
+    SDL_Rect score_zone_rect = res_manager.GetScoreZoneRect();
+
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, background_texture, nullptr, nullptr);
+    SDL_RenderCopy(renderer, res_manager.textures["background"], nullptr, nullptr);
 
     SDL_Rect rect_dest {0, kWinHeight - score_zone_rect.h,
                         score_zone_rect.w, score_zone_rect.h};
-    SDL_RenderCopy(renderer, score_zone_texture, &score_zone_rect, &rect_dest);
+    SDL_RenderCopy(renderer, res_manager.textures["score_zone"], nullptr, &rect_dest);
 
     SDL_Rect logo_rect_dest {screen_width - jp_logo_rect.w, kWinHeight - jp_logo_rect.h,
                              jp_logo_rect.w, jp_logo_rect.h};
-    SDL_RenderCopy(renderer, jp_logo_texture, &jp_logo_rect, &logo_rect_dest);
+    SDL_RenderCopy(renderer, res_manager.textures["jp_logo"], nullptr, &logo_rect_dest);
 }
 
 void Renderer::Render(Snake const &snake, Apple const &apple) {

@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 
+#include "src/arguments_parser/arguments_parser.hpp"
 #include <src/config/constants.hpp>
 #include "src/tools/logger/logger.hpp"
 #include "src/controller/controller.hpp"
 #include "src/renderer/renderer.hpp"
-#include "src/arguments_parser/arguments_parser.hpp"
+#include "src/services/resource_manager/resource_manager.hpp"
 #include "game.hpp"
 
 int main(int argc, char *argv[]) {
@@ -20,8 +21,10 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
 
     Log("%s", kLogMsgAppStart.c_str());
+    ResourceManager resource_manager;
     Renderer renderer(kScreen_width, kScreen_height,
-                      app_options::GridWidth(), app_options::GridHeight());
+                      app_options::GridWidth(), app_options::GridHeight(),
+                      resource_manager);
     EventController controller;
 
     Game game(app_options::GridWidth(), app_options::GridHeight());

@@ -4,6 +4,7 @@ set(HEADER_FILES
         src/arguments_parser/arguments_parser.hpp
         src/output_file_logger/output_file_logger.hpp
         src/controller/controller.hpp
+        src/services/resource_manager/resource_manager.cpp
         src/tools/logger/logger.hpp
         src/tools/utils/utils.hpp
         src/game.hpp
@@ -16,6 +17,7 @@ set(SOURCE_FILES
         src/arguments_parser/arguments_parser.cpp
         src/output_file_logger/output_file_logger.cpp
         src/controller/controller.cpp
+        src/services/resource_manager/resource_manager.cpp
         src/tools/logger/logger.cpp
         src/tools/utils/utils.cpp
         src/game.cpp
