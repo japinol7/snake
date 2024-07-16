@@ -29,14 +29,15 @@ void Renderer::InitSDL() {
 }
 
 void Renderer::CreateWindow() {
-    int window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_INPUT_FOCUS;
-    if (app_options::IsFullScreen())
-        window_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    sdl_window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_INPUT_FOCUS;
+    is_full_screen = app_options::IsFullScreen();
+    if (is_full_screen)
+        sdl_window_flags |= SDL_WINDOW_FULLSCREEN;
 
     sdl_window = SDL_CreateWindow(
             kAppNameWithVersion.c_str(),
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-            screen_width, kWinHeight, window_flags);
+            screen_width, kWinHeight, sdl_window_flags);
 
     if (nullptr == sdl_window) {
         std::cerr << "Window could not be created.\n";
@@ -127,4 +128,12 @@ void Renderer::UpdateWindowTitle(int score, int fps) {
     std::string title{kAppNameWithVersion + " - Score: " + std::to_string(score)
                       + " - FPS: " + std::to_string(fps)};
     SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+SDL_Window *Renderer::GetSdlWindow() {
+    return sdl_window;
+}
+
+[[maybe_unused]] int Renderer::GetSdlWindowFlags() const {
+    return sdl_window_flags;
 }

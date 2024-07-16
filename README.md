@@ -27,6 +27,7 @@
 ## Keyboard keys
      F1:    show a help screen while playing the game
      ESC:   exit the game
+     Alt + Enter:    toggle fullscreen window
      left,     a:    move snake to the left
      right,    d:    move snake to the right
      up,       w:    move snake up

@@ -5,10 +5,12 @@
 
 class EventController {
 public:
-    static void HandleInput(bool &running, Snake &snake);
+    void HandleInput(bool &running, Snake &snake, SDL_Window *sdl_window,
+                            bool &is_full_screen) const;
 
 private:
-    static void HandleKeyDown(bool &running, Snake &snake, const SDL_Event &e);
+    static void HandleKeyDown(bool &running, Snake &snake, SDL_Window *sdl_window,
+                              bool &is_full_screen, const SDL_Event &e);
 };
 
 #endif

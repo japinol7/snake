@@ -19,10 +19,16 @@ public:
 
     void UpdateWindowTitle(int score, int fps);
 
+    SDL_Window *GetSdlWindow();
+    bool is_full_screen = false;
+
+    [[maybe_unused]] [[nodiscard]] int GetSdlWindowFlags() const;
+
 private:
     SDL_Window *sdl_window{};
     SDL_Renderer *renderer{};
     ResourceManager &res_manager;
+    int sdl_window_flags = 0;
 
     const int screen_width;
     const int screen_height;

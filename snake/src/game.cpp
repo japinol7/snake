@@ -83,7 +83,8 @@ void Game::Run(EventController const &controller, Renderer &renderer,
         frame_start = SDL_GetTicks();
 
         // Loop cycle actions
-        EventController::HandleInput(running, snake);
+        controller.HandleInput(running, snake, renderer.GetSdlWindow(),
+                                     renderer.is_full_screen);
         UpdateState();
         renderer.Render(snake, apple);
         frame_end = SDL_GetTicks();
