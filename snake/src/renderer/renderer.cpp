@@ -37,7 +37,7 @@ void Renderer::createWindow() {
     sdl_window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_INPUT_FOCUS;
     is_full_screen = app_options::isFullScreen();
     if (is_full_screen)
-        sdl_window_flags |= SDL_WINDOW_FULLSCREEN;
+        sdl_window_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
     sdl_window = SDL_CreateWindow(
             kAppNameWithVersion.c_str(),
