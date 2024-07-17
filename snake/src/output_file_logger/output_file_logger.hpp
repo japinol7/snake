@@ -9,14 +9,18 @@
 class OutputFileLogger {
 public:
     OutputFileLogger();
+
     ~OutputFileLogger();
-    void SaveGameStart();
-    void SaveGameEnd(int score, int snake_body_size,
+
+    void saveGameStart();
+
+    void saveGameEnd(int score, int snake_body_size,
                      int apples_fetched, float snake_speed);
 
 private:
     std::ofstream out_file;
-    static std::string GetCurrentDateTime();
+
+    static std::string getCurrentDateTime();
 };
 
 #endif

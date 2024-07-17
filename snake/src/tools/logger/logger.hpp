@@ -4,7 +4,7 @@
 #include <SDL_log.h>
 
 template<typename... T>
-void Log(const char *fmt, T... args) {
+void log(const char *fmt, T... args) {
     SDL_Log(fmt, args...);
 }
 

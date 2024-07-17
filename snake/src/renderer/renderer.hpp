@@ -15,14 +15,14 @@ public:
 
     ~Renderer();
 
-    void Render(const Snake& snake, Apple const &apple);
+    void render(const Snake &snake, Apple const &apple);
 
-    void UpdateWindowTitle(int score, int fps);
+    void updateWindowTitle(int score, int fps);
 
-    SDL_Window *GetSdlWindow();
+    SDL_Window *getSdlWindow();
     bool is_full_screen = false;
 
-    [[maybe_unused]] [[nodiscard]] int GetSdlWindowFlags() const;
+    [[maybe_unused]] [[nodiscard]] int getSdlWindowFlags() const;
 
 private:
     SDL_Window *sdl_window{};
@@ -35,21 +35,21 @@ private:
     const unsigned int grid_width;
     const unsigned int grid_height;
 
-    static void InitSDL() ;
+    static void initSdl() ;
 
-    void CreateWindow();
+    void createWindow();
 
-    void CreateRenderer();
+    void createRenderer();
 
-    void CleanScreen() const;
+    void cleanScreen() const;
 
-    SDL_Rect &RenderApple(const Apple &apple, SDL_Rect &loc_rect) const;
+    SDL_Rect &renderApple(const Apple &apple, SDL_Rect &loc_rect) const;
 
-    SDL_Rect &RenderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const;
+    SDL_Rect &renderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const;
 
-    static SDL_Rect &RenderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) ;
+    static SDL_Rect &renderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) ;
 
-    void UpdateScreen() const;
+    void updateScreen() const;
 };
 
 #endif

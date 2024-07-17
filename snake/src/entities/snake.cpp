@@ -3,45 +3,45 @@
 
 #include "snake.hpp"
 
-void Snake::Update() {
+void Snake::update() {
     SDL_Point prev_cell{
             static_cast<int>(head_x),
             static_cast<int>(head_y)
     };
-    UpdateHead();
+    updateHead();
     SDL_Point current_cell{
             static_cast<int>(head_x),
             static_cast<int>(head_y)
     };
 
-    if (HasSnakeHeadMoved(prev_cell, current_cell)) {
-        UpdateBody(prev_cell);
+    if (hasSnakeHeadMoved(prev_cell, current_cell)) {
+        updateBody(prev_cell);
     }
 
-    if (AreConditionsForSnakeToDie(current_cell))
-        Kill();
+    if (areConditionsForSnakeToDie(current_cell))
+        kill();
 }
 
-void Snake::Kill() {
+void Snake::kill() {
     is_alive = false;
 }
 
-bool Snake::HasSnakeHeadMoved(const SDL_Point &prev_cell, const SDL_Point &current_cell) {
+bool Snake::hasSnakeHeadMoved(const SDL_Point &prev_cell, const SDL_Point &current_cell) {
     return current_cell.x != prev_cell.x || current_cell.y != prev_cell.y;
 }
 
-void Snake::ChangeDirection(Snake::Direction input, Snake::Direction opposite) {
+void Snake::changeDirection(Snake::Direction input, Snake::Direction opposite) {
     if (direction != opposite || body_size == 1)
         direction = input;
 }
 
-void Snake::IncreaseSpeed() {
+void Snake::increaseSpeed() {
     speed += kSnakeIncreaseSpeed;
     if (speed > kSnakeInitialSpeedMaxTotal)
         speed = kSnakeInitialSpeedMaxTotal;
 }
 
-void Snake::UpdateHead() {
+void Snake::updateHead() {
     switch (direction) {
         case Direction::kLeft:
             head_x -= speed;
@@ -59,26 +59,26 @@ void Snake::UpdateHead() {
             head_y += speed;
             break;
     }
-    WrapSnakeIfGoesOffScreen();
+    wrapSnakeIfGoesOffScreen();
 }
 
-void Snake::WrapSnakeIfGoesOffScreen() {
+void Snake::wrapSnakeIfGoesOffScreen() {
     head_x = fmod(head_x + grid_width, grid_width);
     head_y = fmod(head_y + grid_height, grid_height);
 }
 
-void Snake::UpdateBody(SDL_Point &prev_head_cell) {
-    AddPreviousHeadCellToSnakeBody(prev_head_cell);
+void Snake::updateBody(SDL_Point &prev_cell) {
+    addPreviousHeadCellToSnakeBody(prev_cell);
 
     if (grow_body_size <= 0) {
-        RemoveTailFromSnakeBody();
+        removeTailFromSnakeBody();
     } else {
         grow_body_size -= 1;
         ++body_size;
     }
 }
 
-bool Snake::AreConditionsForSnakeToDie(const SDL_Point &current_head_cell) {
+bool Snake::areConditionsForSnakeToDie(const SDL_Point &current_head_cell) {
     if (is_dead_when_bite_own_tail)
         for (auto const &item: body_pieces) {
             if (current_head_cell.x == item.x && current_head_cell.y == item.y)
@@ -87,21 +87,21 @@ bool Snake::AreConditionsForSnakeToDie(const SDL_Point &current_head_cell) {
     return false;
 }
 
-void Snake::RemoveTailFromSnakeBody() {
+void Snake::removeTailFromSnakeBody() {
     body_pieces.erase(body_pieces.begin());
     grow_body_size = 0;
 }
 
-void Snake::AddPreviousHeadCellToSnakeBody(const SDL_Point &prev_head_cell) {
+void Snake::addPreviousHeadCellToSnakeBody(const SDL_Point &prev_head_cell) {
     body_pieces.push_back(prev_head_cell);
 }
 
-void Snake::GrowBody() {
-    grow_body_size = app_options::SnakeBodySizeToIncrease();
+void Snake::growBody() {
+    grow_body_size = app_options::snakeBodySizeToIncrease();
 }
 
-bool Snake::ThereIsASnakeInCell(int x, int y) {
-    if (IsSnakeHeadInCell(x, y)) {
+bool Snake::thereIsASnakeInCell(int x, int y) {
+    if (isSnakeHeadInCell(x, y)) {
         return true;
     }
 
@@ -110,6 +110,6 @@ bool Snake::ThereIsASnakeInCell(int x, int y) {
     });
 }
 
-bool Snake::IsSnakeHeadInCell(int x, int y) const {
+bool Snake::isSnakeHeadInCell(int x, int y) const {
     return x == static_cast<int>(head_x) && y == static_cast<int>(head_y);
 }

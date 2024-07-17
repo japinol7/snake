@@ -50,6 +50,6 @@ enum class Color {
     kWhite = 0xFFFFFF,
 };
 
-std::tuple<int, int, int> HexToRGB(int hexValue);
+std::tuple<int, int, int> hexToRGB(int hexValue);
 
 #endif

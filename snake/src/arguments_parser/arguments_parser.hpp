@@ -2,21 +2,21 @@
 #define JP_APP_ARGUMENTS_PARSER_HPP
 
 namespace app_options {
-    bool Parse(int argc, char *argv[]);
+    bool parse(int argc, char *argv[]);
 
-    bool IsFullScreen();
+    bool isFullScreen();
 
-    unsigned int GridWidth();
+    unsigned int gridWidth();
 
-    unsigned int GridHeight();
+    unsigned int gridHeight();
 
-    int SnakeInitialBodySize();
+    int snakeInitialBodySize();
 
-    int SnakeBodySizeToIncrease();
+    int snakeBodySizeToIncrease();
 
-    float SnakeInitialSpeed();
+    float snakeInitialSpeed();
 
-    void CheckHasArgumentLeft(int argc, int i);
+    void checkHasArgumentLeft(int argc, int i);
 };
 
 #endif

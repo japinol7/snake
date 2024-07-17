@@ -15,22 +15,27 @@ Renderer::Renderer(const int screen_width, const int screen_height,
         : screen_width(screen_width), screen_height(screen_height),
           grid_width(grid_width), grid_height(grid_height),
           res_manager(const_cast<ResourceManager &>(resource_manager)) {
-    InitSDL();
-    CreateWindow();
-    CreateRenderer();
-    res_manager.LoadTextures(renderer, screen_width, screen_height);
+    initSdl();
+    createWindow();
+    createRenderer();
+    res_manager.loadTextures(renderer, screen_width, screen_height);
 }
 
-void Renderer::InitSDL() {
+Renderer::~Renderer() {
+    SDL_DestroyWindow(sdl_window);
+    SDL_Quit();
+}
+
+void Renderer::initSdl() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize.\n";
         std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
     }
 }
 
-void Renderer::CreateWindow() {
+void Renderer::createWindow() {
     sdl_window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_INPUT_FOCUS;
-    is_full_screen = app_options::IsFullScreen();
+    is_full_screen = app_options::isFullScreen();
     if (is_full_screen)
         sdl_window_flags |= SDL_WINDOW_FULLSCREEN;
 
@@ -45,7 +50,7 @@ void Renderer::CreateWindow() {
     }
 }
 
-void Renderer::CreateRenderer() {
+void Renderer::createRenderer() {
     int renderer_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
     renderer = SDL_CreateRenderer(sdl_window, -1, renderer_flags);
     if (nullptr == renderer) {
@@ -54,14 +59,9 @@ void Renderer::CreateRenderer() {
     }
 }
 
-Renderer::~Renderer() {
-    SDL_DestroyWindow(sdl_window);
-    SDL_Quit();
-}
-
-void Renderer::CleanScreen() const {
-    SDL_Rect jp_logo_rect = res_manager.GetJpLogoRect();
-    SDL_Rect score_zone_rect = res_manager.GetScoreZoneRect();
+void Renderer::cleanScreen() const {
+    SDL_Rect jp_logo_rect = res_manager.getJpLogoRect();
+    SDL_Rect score_zone_rect = res_manager.getScoreZoneRect();
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, res_manager.textures["background"], nullptr, nullptr);
@@ -75,16 +75,16 @@ void Renderer::CleanScreen() const {
     SDL_RenderCopy(renderer, res_manager.textures["jp_logo"], nullptr, &logo_rect_dest);
 }
 
-void Renderer::Render(Snake const &snake, Apple const &apple) {
+void Renderer::render(const Snake &snake, Apple const &apple) {
     SDL_Rect loc_rect;
     loc_rect.w = screen_width / grid_width;
     loc_rect.h = screen_height / grid_height;
 
-    CleanScreen();
+    cleanScreen();
 
-    loc_rect = RenderApple(apple, loc_rect);
-    loc_rect = RenderSnakeBody(snake, loc_rect);
-    loc_rect = RenderSnakeHead(snake, loc_rect);
+    loc_rect = renderApple(apple, loc_rect);
+    loc_rect = renderSnakeBody(snake, loc_rect);
+    loc_rect = renderSnakeHead(snake, loc_rect);
 
     if (snake.is_alive) {
         SDL_SetRenderDrawColor(renderer, 0, 83, 255, 255);
@@ -93,20 +93,20 @@ void Renderer::Render(Snake const &snake, Apple const &apple) {
     }
     SDL_RenderFillRect(renderer, &loc_rect);
 
-    UpdateScreen();
+    updateScreen();
 }
 
-void Renderer::UpdateScreen() const {
+void Renderer::updateScreen() const {
     SDL_RenderPresent(renderer);
 }
 
-SDL_Rect &Renderer::RenderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) {
+SDL_Rect &Renderer::renderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) {
     loc_rect.x = static_cast<int>(snake.head_x) * loc_rect.w;
     loc_rect.y = static_cast<int>(snake.head_y) * loc_rect.h;
     return loc_rect;
 }
 
-SDL_Rect &Renderer::RenderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const {
+SDL_Rect &Renderer::renderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const {
     SDL_SetRenderDrawColor(renderer, 100, 0, 255, 255);
     for (SDL_Point const &point: snake.body_pieces) {
         loc_rect.x = point.x * loc_rect.w;
@@ -116,24 +116,24 @@ SDL_Rect &Renderer::RenderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) cons
     return loc_rect;
 }
 
-SDL_Rect &Renderer::RenderApple(const Apple &apple, SDL_Rect &loc_rect) const {
+SDL_Rect &Renderer::renderApple(const Apple &apple, SDL_Rect &loc_rect) const {
     SDL_SetRenderDrawColor(renderer, 150, 220, 0, 255);
-    loc_rect.x = apple.GetPosX() * loc_rect.w;
-    loc_rect.y = apple.GetPosY() * loc_rect.h;
+    loc_rect.x = apple.getPosX() * loc_rect.w;
+    loc_rect.y = apple.getPosY() * loc_rect.h;
     SDL_RenderFillRect(renderer, &loc_rect);
     return loc_rect;
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
+void Renderer::updateWindowTitle(int score, int fps) {
     std::string title{kAppNameWithVersion + " - Score: " + std::to_string(score)
                       + " - FPS: " + std::to_string(fps)};
     SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 
-SDL_Window *Renderer::GetSdlWindow() {
+SDL_Window *Renderer::getSdlWindow() {
     return sdl_window;
 }
 
-[[maybe_unused]] int Renderer::GetSdlWindowFlags() const {
+[[maybe_unused]] int Renderer::getSdlWindowFlags() const {
     return sdl_window_flags;
 }

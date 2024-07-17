@@ -7,7 +7,7 @@
 #include <string_view>
 
 template<typename T>
-bool StringViewToNum(const std::string_view &view, T &value) {
+bool stringViewToNum(const std::string_view &view, T &value) {
     if (view.empty()) {
         return false;
     }
@@ -26,7 +26,7 @@ bool StringViewToNum(const std::string_view &view, T &value) {
 }
 
 
-SDL_Texture *LoadTexture(
+SDL_Texture *loadTexture(
         SDL_Renderer *renderer, const char *image_path,
         int width, int height);
 

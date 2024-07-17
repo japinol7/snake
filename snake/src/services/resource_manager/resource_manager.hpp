@@ -14,15 +14,15 @@ public:
 
     ~ResourceManager();
 
-    void LoadTextures(SDL_Renderer *renderer, int screen_width, int screen_height);
-
     std::map<std::string, SDL_Texture *> textures;
 
-    [[nodiscard]] const SDL_Rect &GetScoreZoneRect() const {
+    void loadTextures(SDL_Renderer *renderer, int screen_width, int screen_height);
+
+    [[nodiscard]] const SDL_Rect &getScoreZoneRect() const {
         return score_zone_rect;
     }
 
-    [[nodiscard]] const SDL_Rect &GetJpLogoRect() const {
+    [[nodiscard]] const SDL_Rect &getJpLogoRect() const {
         return jp_logo_rect;
     }
 

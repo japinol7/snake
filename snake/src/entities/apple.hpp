@@ -7,11 +7,11 @@
 
 class Apple {
 public:
-    void SetPos(int x, int y);
+    void setPos(int x, int y);
 
-    [[nodiscard]] int GetPosX() const;
+    [[nodiscard]] int getPosX() const;
 
-    [[nodiscard]] int GetPosY() const;
+    [[nodiscard]] int getPosY() const;
 
 private:
     int pos_x{0};

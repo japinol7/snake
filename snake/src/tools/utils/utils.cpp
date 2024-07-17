@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include "src/renderer/renderer.hpp"
 
-SDL_Texture *LoadTexture(SDL_Renderer *renderer, const char *image_path,
+SDL_Texture *loadTexture(SDL_Renderer *renderer, const char *image_path,
                          int width, int height) {
     SDL_Surface *bmpSurf = IMG_Load(image_path);
 

@@ -14,7 +14,7 @@ namespace {
     float snake_initial_speed = kSnakeInitialSpeed;
 }
 
-bool app_options::Parse(int argc, char *argv[]) {
+bool app_options::parse(int argc, char *argv[]) {
     if (argc < 2)
         return false;
 
@@ -25,7 +25,7 @@ bool app_options::Parse(int argc, char *argv[]) {
     while (i < argc - 1) {
         arg = args[++i];
         if (arg == "-h" || arg == "--help") {
-            Log("%s", kAppCLIArgumentsUsage.c_str());
+            log("%s", kAppCLIArgumentsUsage.c_str());
             return true;
         }
         if (arg == "-f" || arg == "--fullscreen") {
@@ -36,10 +36,10 @@ bool app_options::Parse(int argc, char *argv[]) {
             continue;
         }
         if (arg == "-g" || arg == "--cells-width-qty") {
-            CheckHasArgumentLeft(argc, i);
+            checkHasArgumentLeft(argc, i);
             arg = args[++i];
             unsigned int tp_val;
-            if (!StringViewToNum(arg, tp_val))
+            if (!stringViewToNum(arg, tp_val))
                 throw std::runtime_error("app: -g/--cells-width-qty parameter value wrong!");
             if (tp_val < kGridWidthMin || tp_val > kGridWidthMax)
                 throw std::runtime_error("app: -g/--cells-width-qty parameter value must be between "
@@ -50,10 +50,10 @@ bool app_options::Parse(int argc, char *argv[]) {
             continue;
         }
         if (arg == "-b" || arg == "--body-pieces") {
-            CheckHasArgumentLeft(argc, i);
+            checkHasArgumentLeft(argc, i);
             arg = args[++i];
             int tp_val;
-            if (!StringViewToNum(arg, tp_val))
+            if (!stringViewToNum(arg, tp_val))
                 throw std::runtime_error("app: -b/--body-pieces parameter value wrong!");
             if (tp_val < kSnakeInitialBodySizeMin || tp_val > kSnakeInitialBodySizeMax)
                 throw std::runtime_error("app: -b/--body-pieces parameter value must be between "
@@ -63,10 +63,10 @@ bool app_options::Parse(int argc, char *argv[]) {
             continue;
         }
         if (arg == "-r" || arg == "--body-size-to-increase") {
-            CheckHasArgumentLeft(argc, i);
+            checkHasArgumentLeft(argc, i);
             arg = args[++i];
             int tp_val;
-            if (!StringViewToNum(arg, tp_val))
+            if (!stringViewToNum(arg, tp_val))
                 throw std::runtime_error("app: -r/--body-size-to-increase parameter value wrong!");
             if (tp_val < kSnakeBodySizeToIncreaseMin || tp_val > kSnakeBodySizeToIncreaseMax)
                 throw std::runtime_error("app: -r/--body-size-to-increase parameter value must be between "
@@ -76,10 +76,10 @@ bool app_options::Parse(int argc, char *argv[]) {
             continue;
         }
         if (arg == "-s" || arg == "--snake-speed") {
-            CheckHasArgumentLeft(argc, i);
+            checkHasArgumentLeft(argc, i);
             arg = args[++i];
             float tp_val;
-            if (!StringViewToNum(arg, tp_val))
+            if (!stringViewToNum(arg, tp_val))
                 throw std::runtime_error("app: -s/--snake-speed parameter value wrong!");
             if (tp_val < kSnakeInitialSpeedMin || tp_val > kSnakeInitialSpeedMax)
                 throw std::runtime_error("app: -s/--snake-speed parameter value must be between "
@@ -92,31 +92,31 @@ bool app_options::Parse(int argc, char *argv[]) {
     return false;
 }
 
-void app_options::CheckHasArgumentLeft(int argc, int i) {
+void app_options::checkHasArgumentLeft(int argc, int i) {
     if (i > argc - 3)
         throw std::runtime_error("app: parameter value missing!");
 }
 
-bool app_options::IsFullScreen() {
+bool app_options::isFullScreen() {
     return is_full_screen;
 }
 
-unsigned int app_options::GridWidth() {
+unsigned int app_options::gridWidth() {
     return grid_width;
 }
 
-unsigned int app_options::GridHeight() {
+unsigned int app_options::gridHeight() {
     return grid_height;
 }
 
-int app_options::SnakeInitialBodySize() {
+int app_options::snakeInitialBodySize() {
     return snake_initial_body_size;
 }
 
-int app_options::SnakeBodySizeToIncrease() {
+int app_options::snakeBodySizeToIncrease() {
     return snake_body_size_to_increase;
 }
 
-float app_options::SnakeInitialSpeed() {
+float app_options::snakeInitialSpeed() {
     return snake_initial_speed;
 }

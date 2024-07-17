@@ -1,6 +1,10 @@
 # Run manually to reformat a file:
 # clang-format -i --style=file <file>
 
+# Naming style:
+# PascalCase for types, snake_case for variables, camelCase for functions and methods,
+# kCamelCase for constants, and UPPER_CASE for macros.
+
 Language: Cpp
 Standard: Cpp20
 
