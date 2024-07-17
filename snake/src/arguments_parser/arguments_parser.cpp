@@ -28,13 +28,6 @@ bool app_options::parse(int argc, char *argv[]) {
             log("%s", kAppCLIArgumentsUsage.c_str());
             return true;
         }
-        if (arg == "-f" || arg == "--fullscreen") {
-            if (is_full_screen) {
-                throw std::runtime_error("app: cannot use -f/--fullscreen parameter twice!");
-            }
-            is_full_screen = true;
-            continue;
-        }
         if (arg == "-g" || arg == "--cells-width-qty") {
             checkHasArgumentLeft(argc, i);
             arg = args[++i];
@@ -87,6 +80,9 @@ bool app_options::parse(int argc, char *argv[]) {
                                          + std::to_string(kSnakeInitialSpeedMax) + " !");
             snake_initial_speed = tp_val;
             continue;
+        } else if (!arg.empty()) {
+            log("%s", kAppCLIArgumentsUsage.c_str());
+            return true;
         }
     }
     return false;

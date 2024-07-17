@@ -49,7 +49,7 @@ const string kLogMsgAppStart = "Start app " + kAppNameWithVersion
 const string kLogMsgAppEnd = "End app " + kAppName + "\n";
 
 const string kAppCLIArgumentsUsage = ""
-    "usage: app [-h  help] [-f  fullscreen]\n"
+    "usage: app [-h  help]\n"
     "\t[-g  cells-width-qty] QTY\n"
     "\t[-b  body-pieces] QTY\n"
     "\t[-r  body-size-to-increase] QTY\n"
