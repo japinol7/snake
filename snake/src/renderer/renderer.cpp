@@ -63,65 +63,36 @@ void Renderer::cleanScreen() const {
     SDL_Rect jp_logo_rect = res_manager.getJpLogoRect();
     SDL_Rect score_zone_rect = res_manager.getScoreZoneRect();
 
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, res_manager.textures["background"], nullptr, nullptr);
+    SDL_RenderCopy(renderer, res_manager.textures["background"],
+                   &screen_rect, &screen_rect);
 
-    SDL_Rect rect_dest {0, kWinHeight - score_zone_rect.h,
+    SDL_Rect rect_dest {0, kWinHeight - score_zone_rect.h - 1,
                         score_zone_rect.w, score_zone_rect.h};
-    SDL_RenderCopy(renderer, res_manager.textures["score_zone"], nullptr, &rect_dest);
+    SDL_RenderCopy(renderer, res_manager.textures["score_zone"],
+                   nullptr, &rect_dest);
 
-    SDL_Rect logo_rect_dest {screen_width - jp_logo_rect.w, kWinHeight - jp_logo_rect.h,
+    SDL_Rect logo_rect_dest {screen_width - jp_logo_rect.w,
+                             kWinHeight - jp_logo_rect.h - 1,
                              jp_logo_rect.w, jp_logo_rect.h};
-    SDL_RenderCopy(renderer, res_manager.textures["jp_logo"], nullptr, &logo_rect_dest);
+    SDL_RenderCopy(renderer, res_manager.textures["jp_logo"],
+                   nullptr, &logo_rect_dest);
 }
 
-void Renderer::render(const Snake &snake, Apple const &apple) {
+void Renderer::render(Snake &snake, Apple &apple) {
     SDL_Rect loc_rect;
     loc_rect.w = screen_width / grid_width;
     loc_rect.h = screen_height / grid_height;
 
     cleanScreen();
 
-    loc_rect = renderApple(apple, loc_rect);
-    loc_rect = renderSnakeBody(snake, loc_rect);
-    loc_rect = renderSnakeHead(snake, loc_rect);
-
-    if (snake.is_alive) {
-        SDL_SetRenderDrawColor(renderer, 0, 83, 255, 255);
-    } else {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    }
-    SDL_RenderFillRect(renderer, &loc_rect);
+    apple.draw(renderer, loc_rect);
+    snake.draw(renderer, loc_rect);
 
     updateScreen();
 }
 
 void Renderer::updateScreen() const {
     SDL_RenderPresent(renderer);
-}
-
-SDL_Rect &Renderer::renderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) {
-    loc_rect.x = static_cast<int>(snake.head_x) * loc_rect.w;
-    loc_rect.y = static_cast<int>(snake.head_y) * loc_rect.h;
-    return loc_rect;
-}
-
-SDL_Rect &Renderer::renderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const {
-    SDL_SetRenderDrawColor(renderer, 100, 0, 255, 255);
-    for (SDL_Point const &point: snake.body_pieces) {
-        loc_rect.x = point.x * loc_rect.w;
-        loc_rect.y = point.y * loc_rect.h;
-        SDL_RenderFillRect(renderer, &loc_rect);
-    }
-    return loc_rect;
-}
-
-SDL_Rect &Renderer::renderApple(const Apple &apple, SDL_Rect &loc_rect) const {
-    SDL_SetRenderDrawColor(renderer, 150, 220, 0, 255);
-    loc_rect.x = apple.getPosX() * loc_rect.w;
-    loc_rect.y = apple.getPosY() * loc_rect.h;
-    SDL_RenderFillRect(renderer, &loc_rect);
-    return loc_rect;
 }
 
 void Renderer::updateWindowTitle(int score, int fps) {

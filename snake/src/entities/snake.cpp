@@ -22,6 +22,34 @@ void Snake::update() {
         kill();
 }
 
+void Snake::draw(SDL_Renderer *renderer, SDL_Rect &loc_rect) {
+    drawBody(renderer, loc_rect);
+    drawHead(renderer, loc_rect);
+}
+
+void Snake::drawHead(SDL_Renderer *renderer, SDL_Rect &loc_rect) {
+    loc_rect.x = static_cast<int>(head_x) * loc_rect.w;
+    loc_rect.y = static_cast<int>(head_y) * loc_rect.h;
+
+    if (is_alive) {
+        SDL_SetRenderDrawColor(
+                renderer, head_color[0], head_color[1], head_color[2], 255);
+    } else {
+        SDL_SetRenderDrawColor(
+                renderer, head_dead_color[0], head_dead_color[1], head_dead_color[2], 255);
+    }
+    SDL_RenderFillRect(renderer, &loc_rect);
+}
+
+void Snake::drawBody(SDL_Renderer *renderer, SDL_Rect &loc_rect) {
+    SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
+    for (SDL_Point const &point: body_pieces) {
+        loc_rect.x = point.x * loc_rect.w;
+        loc_rect.y = point.y * loc_rect.h;
+        SDL_RenderFillRect(renderer, &loc_rect);
+    }
+}
+
 void Snake::kill() {
     is_alive = false;
 }
@@ -37,8 +65,8 @@ void Snake::changeDirection(Snake::Direction input, Snake::Direction opposite) {
 
 void Snake::increaseSpeed() {
     speed += kSnakeIncreaseSpeed;
-    if (speed > kSnakeInitialSpeedMaxTotal)
-        speed = kSnakeInitialSpeedMaxTotal;
+    if (speed > kSnakeSpeedMax)
+        speed = kSnakeSpeedMax;
 }
 
 void Snake::updateHead() {

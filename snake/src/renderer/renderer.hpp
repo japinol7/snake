@@ -15,7 +15,7 @@ public:
 
     ~Renderer();
 
-    void render(const Snake &snake, Apple const &apple);
+    void render(Snake &snake, Apple &apple);
 
     void updateWindowTitle(int score, int fps);
 
@@ -32,8 +32,10 @@ private:
 
     const int screen_width;
     const int screen_height;
+    SDL_Rect screen_rect = {0, 0, screen_width, screen_height};
     const unsigned int grid_width;
     const unsigned int grid_height;
+
 
     static void initSdl() ;
 
@@ -42,12 +44,6 @@ private:
     void createRenderer();
 
     void cleanScreen() const;
-
-    SDL_Rect &renderApple(const Apple &apple, SDL_Rect &loc_rect) const;
-
-    SDL_Rect &renderSnakeBody(const Snake &snake, SDL_Rect &loc_rect) const;
-
-    static SDL_Rect &renderSnakeHead(const Snake &snake, SDL_Rect &loc_rect) ;
 
     void updateScreen() const;
 };

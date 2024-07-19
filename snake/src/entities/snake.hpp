@@ -23,6 +23,8 @@ public:
               head_x(grid_width / 2),
               head_y(grid_height / 2) {}
 
+    void draw(SDL_Renderer *renderer, SDL_Rect &loc_rect);
+
     void update();
 
     void growBody();
@@ -35,6 +37,9 @@ public:
 
     float head_x;
     float head_y;
+    std::vector<Uint8> head_color{0, 83, 255};
+    std::vector<Uint8> head_dead_color{255, 0, 0};
+    std::vector<Uint8> color{100, 0, 255};
     std::vector<SDL_Point> body_pieces;
     Direction direction = Direction::kUp;
     bool is_dead_when_bite_own_tail = kSnakeDieWhenBiteOwnTail;
@@ -50,6 +55,10 @@ private:
     int grow_body_size{app_options::snakeInitialBodySize()};
     unsigned int grid_width;
     unsigned int grid_height;
+
+    void drawHead(SDL_Renderer *renderer, SDL_Rect &loc_rect);
+
+    void drawBody(SDL_Renderer *renderer, SDL_Rect &loc_rect);
 
     [[nodiscard]] bool isSnakeHeadInCell(int x, int y) const;
 
